@@ -17,6 +17,7 @@ const Users = () => {
     return (
         <div>
             <h1>User Management</h1>
+            <Link href="/create-user">Create New User</Link>
             <table>
                 <thead>
                     <tr>
@@ -26,11 +27,7 @@ const Users = () => {
                 <tbody>
                     {users.map((user) => (
                         <tr key={user.id}>
-                            <td>
-                                <Link href={`/users/${user.id}`}>
-                                    {user.email}
-                                </Link>
-                            </td>
+                            <td>{user.email}</td>
                         </tr>
                     ))}
                 </tbody>
