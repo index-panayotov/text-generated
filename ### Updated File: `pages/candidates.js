@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 const Candidates = () => {
     const [candidates, setCandidates] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchCandidates = async () => {
@@ -14,9 +15,23 @@ const Candidates = () => {
         fetchCandidates();
     }, []);
 
+    const filteredCandidates = candidates.filter(candidate => {
+        const fullName = candidate.name.toLowerCase();
+        const email = candidate.email.toLowerCase();
+        const jobTitle = candidate.jobOffer.title.toLowerCase();
+        const search = searchTerm.toLowerCase();
+        return fullName.includes(search) || email.includes(search) || jobTitle.includes(search);
+    });
+
     return (
         <div>
             <h1>Candidates</h1>
+            <input
+                type="text"
+                placeholder="Search by name, email, or job position"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <table>
                 <thead>
                     <tr>
@@ -27,7 +42,7 @@ const Candidates = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {candidates.map((candidate) => (
+                    {filteredCandidates.map((candidate) => (
                         <tr key={candidate.id}>
                             <td>{candidate.name}</td>
                             <td>{candidate.email}</td>
