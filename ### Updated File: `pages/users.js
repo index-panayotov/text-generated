@@ -19,6 +19,7 @@ const Users = () => {
             <h1>User Management</h1>
             <Link href="/create-user">Create New User</Link>
             <Link href="/job-offers">Job Offers</Link> {/* New link to Job Offers */}
+            <Link href="/candidates">Candidates</Link> {/* New link to Candidates */}
             <table>
                 <thead>
                     <tr>

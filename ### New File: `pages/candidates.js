@@ -1,0 +1,41 @@
+import { useEffect, useState } from 'react';
+
+const Candidates = () => {
+    const [candidates, setCandidates] = useState([]);
+
+    useEffect(() => {
+        const fetchCandidates = async () => {
+            const res = await fetch('/api/candidates');
+            const data = await res.json();
+            setCandidates(data);
+        };
+
+        fetchCandidates();
+    }, []);
+
+    return (
+        <div>
+            <h1>Candidates</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Job Offer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {candidates.map((candidate) => (
+                        <tr key={candidate.id}>
+                            <td>{candidate.name}</td>
+                            <td>{candidate.email}</td>
+                            <td>{candidate.jobOffer.title}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
+export default Candidates;
