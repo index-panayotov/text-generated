@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const Candidates = () => {
     const [candidates, setCandidates] = useState([]);
@@ -22,6 +23,7 @@ const Candidates = () => {
                         <th>Name</th>
                         <th>Email</th>
                         <th>Job Offer</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,6 +32,9 @@ const Candidates = () => {
                             <td>{candidate.name}</td>
                             <td>{candidate.email}</td>
                             <td>{candidate.jobOffer.title}</td>
+                            <td>
+                                <Link href={`/compare-candidate/${candidate.id}`}>Compare CV</Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

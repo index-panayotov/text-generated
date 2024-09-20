@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         try {
             const candidates = await prisma.candidate.findMany({
                 include: {
-                    jobOffer: true, // Include job offer details
+                    jobOffer: true,
                 },
             });
             res.status(200).json(candidates);
