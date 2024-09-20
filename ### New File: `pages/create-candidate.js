@@ -1,33 +1,42 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-const CreateUser = () => {
+const CreateCandidate = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('/api/users', {
+        const res = await fetch('/api/candidates', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ name, email }),
         });
 
         if (res.ok) {
-            router.push('/users');
+            router.push('/candidates');
         } else {
-            alert("User creation failed!");
+            alert("Candidate creation failed!");
         }
     };
 
     return (
         <div>
-            <h1>Create User</h1>
+            <h1>Create Candidate</h1>
             <form onSubmit={handleSubmit}>
+                <label htmlFor="name">Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                /><br /><br />
+
                 <label htmlFor="email">Email:</label>
                 <input
                     type="email"
@@ -37,19 +46,10 @@ const CreateUser = () => {
                     required
                 /><br /><br />
 
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                /><br /><br />
-
                 <input type="submit" value="Create" />
             </form>
         </div>
     );
 };
 
-export default CreateUser;
+export default CreateCandidate;

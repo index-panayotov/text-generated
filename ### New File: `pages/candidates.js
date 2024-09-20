@@ -14,15 +14,27 @@ const Candidates = () => {
         fetchCandidates();
     }, []);
 
+    const handleDelete = async (id) => {
+        const res = await fetch(`/api/candidates/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (res.ok) {
+            setCandidates(candidates.filter((candidate) => candidate.id !== id));
+        } else {
+            alert("Deletion failed!");
+        }
+    };
+
     return (
         <div>
             <h1>Candidates</h1>
+            <Link href="/create-candidate">Create New Candidate</Link>
             <table>
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Job Offer</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -31,9 +43,9 @@ const Candidates = () => {
                         <tr key={candidate.id}>
                             <td>{candidate.name}</td>
                             <td>{candidate.email}</td>
-                            <td>{candidate.jobOffer.title}</td>
                             <td>
-                                <Link href={`/compare-candidate/${candidate.id}`}>Compare CV</Link>
+                                <Link href={`/candidates/${candidate.id}`}>Edit</Link>
+                                <button onClick={() => handleDelete(candidate.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
